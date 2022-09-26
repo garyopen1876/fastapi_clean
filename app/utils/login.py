@@ -7,15 +7,16 @@ import bcrypt
 
 def login(username: str, password: str):
     db = CRUDUser()
+
     user_password = db.get_user_password(username)
-    
-    if bcrypt.checkpw(password.encode('utf8'), user_password[0][0].encode('utf8')):
+
+    if user_password and bcrypt.checkpw(password.encode('utf8'), user_password[0][0].encode('utf8')):
         raise HTTPException(
             status_code=status.HTTP_200_OK,
-            detail=f"login successfully"
+            detail=f"Login successfully"
         )
 
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
-        detail=f"username or password error"
+        detail=f"Username or Password error"
     )
