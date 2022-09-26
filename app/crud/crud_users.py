@@ -12,7 +12,7 @@ class CRUDUser(CRUDBase):
                 username=username,
                 password=bcrypt.hashpw(
                     password.encode('utf8'), bcrypt.gensalt(12)
-                    ).decode(),
+                ).decode(),
                 email=email
             )
             self.db.add(user)
@@ -40,6 +40,21 @@ class CRUDUser(CRUDBase):
                 User.username == username
             )
             return query.all()
+        except Exception as e:
+            self.db.rollback()
+            raise e
+
+    def update_user_password(self, user_id: int, password: str, commit: bool = True):
+        try:
+            self.db.query(User).filter(
+                User.id == user_id).update({"password": bcrypt.hashpw(
+                    password.encode('utf8'), bcrypt.gensalt(12)
+                ).decode()})
+            if commit:
+                self.db.commit()
+            else:
+                self.db.flush()
+            return True
         except Exception as e:
             self.db.rollback()
             raise e
