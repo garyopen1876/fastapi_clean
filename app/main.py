@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routers import login, user 
+from app.routers import login, user
 
 APP_TITLE = "login_system"
 APP_VERSION = "1.0.0"
@@ -10,7 +10,7 @@ app = FastAPI(
 )
 
 
-@app.get("/")
+@app.get("/", summary="Hello Page")
 def read_root():
     return {"Hello": "World"}
 
