@@ -8,22 +8,19 @@ def user_create(username: str, password: str, email: str):
     if db.get_by_id_one_or_none(User, User.username, username):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail=f"username existed"
+            detail=f"Username existed"
         )
     if db.get_by_id_one_or_none(User, User.email, email):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail=f"email existed"
+            detail=f"Email existed"
         )
 
-    try:
-        db.user_create(username, password, email)
-        return {"Message": "user create successfully"}
-    except Exception as e:
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Operation failed. {e}"
-        )
+    db.user_create(username, password, email)
+    raise HTTPException(
+        status_code=status.HTTP_201_CREATED,
+        detail=f"User create successfully"
+    )
 
 
 def user_delete(user_id: int):
@@ -31,13 +28,11 @@ def user_delete(user_id: int):
     if not db.get_by_id_one_or_none(User, User.id, user_id):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail=f"user not existed"
+            detail=f"User not existed"
         )
-    try:
-        db.user_delete(user_id)
-        return {"Message": "user delete successfully"}
-    except Exception as e:
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Operation failed. {e}"
-        )
+        
+    db.user_delete(user_id)
+    raise HTTPException(
+        status_code=status.HTTP_204_NO_CONTENT,
+        detail=f"User delete successfully"
+    )
