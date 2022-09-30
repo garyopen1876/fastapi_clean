@@ -1,10 +1,11 @@
 from fastapi import HTTPException, status
 from app.crud.crud_users import CRUDUser
 from app.db.db_models import User
+from app.schemas.users import UserCreate, UserDelete, UserResetPassword
 import bcrypt
 
 
-def user_create(username: str, password: str, email: str):
+def user_create(username: str, password: str, email: str) -> UserCreate:
     db = CRUDUser()
     if db.get_by_id_one_or_none(User, User.username, username):
         raise HTTPException(
@@ -18,10 +19,10 @@ def user_create(username: str, password: str, email: str):
         )
 
     db.user_create(username, password, email)
-    return {"message": "User create successfully"}
+    return UserCreate(**{"message": "User create successfully"})
 
 
-def user_delete(user_id: int):
+def user_delete(user_id: int) -> UserDelete:
     db = CRUDUser()
     if not db.get_by_id_one_or_none(User, User.id, user_id):
         raise HTTPException(
@@ -30,10 +31,10 @@ def user_delete(user_id: int):
         )
 
     db.user_delete(user_id)
-    return {"message": "User delete successfully"}
+    return UserDelete(**{"message": "User delete successfully"})
 
 
-def user_reset_password(username: str, old_password: str, new_password: str):
+def user_reset_password(username: str, old_password: str, new_password: str) -> UserResetPassword:
     db = CRUDUser()
 
     user = db.get_by_id_one_or_none(User, User.username, username)
@@ -45,7 +46,7 @@ def user_reset_password(username: str, old_password: str, new_password: str):
 
     if bcrypt.checkpw(old_password.encode('utf8'), user.password.encode('utf8')):
         db.update_user_password(user.id, new_password)
-        return {"message": "User password reset successfully"}
+        return UserResetPassword(**{"message": "User password reset successfully"})
 
     raise HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
