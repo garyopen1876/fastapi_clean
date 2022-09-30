@@ -1,11 +1,10 @@
+from app.setting import settings
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from dotenv import load_dotenv
-import os
 
-load_dotenv()
-SQLALCHEMY_DATABASE_URL = os.getenv("DB_URL")
+SQLALCHEMY_DATABASE_URL = settings.db_url
+
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
     pool_pre_ping=True,

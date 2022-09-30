@@ -1,13 +1,10 @@
-from email.message import Message
-from fastapi import HTTPException, status
 from app.crud.crud_users import CRUDUser
-from jose import jwt
-from dotenv import load_dotenv
+from app.setting import settings
 from datetime import datetime, timedelta
-import bcrypt
-import os
+from fastapi import HTTPException, status
+from jose import jwt
 
-load_dotenv()
+import bcrypt
 
 
 def login(username: str, password: str):
@@ -15,8 +12,8 @@ def login(username: str, password: str):
 
     user_password = db.get_user_password(username)
     if user_password and bcrypt.checkpw(password.encode('utf8'), user_password[0][0].encode('utf8')):
-        token = jwt.encode({"username": username, "exp": datetime.utcnow() + timedelta(minutes=os.getenv("TOKEN_LIMIT_MINUTES"))},
-                           os.getenv("JWT_SECRET"), algorithm="HS256")
+        token = jwt.encode({"username": username, "exp": datetime.utcnow() + timedelta(minutes=settings.token_limit_minutes)},
+                           settings.jwt_secret, algorithm="HS256")
         return {"message": "Login successfully", "token": token}
 
     raise HTTPException(

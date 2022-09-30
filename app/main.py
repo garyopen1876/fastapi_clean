@@ -1,13 +1,15 @@
 from fastapi import FastAPI
 from app.routers import login, user
+from app.setting import settings
+
 
 APP_TITLE = "login_system"
 APP_VERSION = "1.0.0"
 
-app = FastAPI(
-    title=APP_TITLE,
-    version=APP_VERSION
-)
+if settings.develop:
+    app = FastAPI(title=APP_TITLE, version=APP_VERSION)
+else:
+    app = FastAPI(docs_url=None, redoc_url=None)
 
 
 @app.get("/", summary="Hello Page")
