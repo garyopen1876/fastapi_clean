@@ -2,14 +2,15 @@ syntax = "proto3";
 
 package grpc;
 
-service Greeter {
-    rpc SayHello (HelloRequest) returns (HelloResponse) {}
+service Login {
+    rpc Login (LoginRequest) returns (LoginResponse) {}
 }
 
-message HelloRequest {
-    string name = 1;
+message LoginRequest {
+    string username = 1;
+    string password = 2;
 }
 
-message HelloResponse {
+message LoginResponse {
     string message = 1;
 }

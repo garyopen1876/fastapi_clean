@@ -1,20 +1,32 @@
 import grpc
 from concurrent import futures
-import grpc_pb2
-import grpc_pb2_grpc
+from crud.crud_users import CRUDUser
+import grpc_pb2 as grpc_pb2
+import grpc_pb2_grpc as grpc_pb2_grpc
+import bcrypt
+from datetime import datetime, timedelta
+from jose import jwt
 
 
-# 實現 proto 定義的方法 
-class Greeter(grpc_pb2_grpc.GreeterServicer):
-    def SayHello(self, request, context):
+class Login(grpc_pb2_grpc.LoginServicer):
+    def Login(self, request, _context):
         # 要處理的事情
-        return grpc_pb2.HelloResponse(message='Hello {msg}'.format(msg=request.name))
+        db = CRUDUser()
+        username = request.username
+        password = request.password
+        user_password = db.get_user_password(username)
+        if user_password and bcrypt.checkpw(password.encode('utf8'), user_password[0][0].encode('utf8')):
+            token = jwt.encode({"username": username, "exp": datetime.utcnow(
+            ) + timedelta(minutes=10)}, "123", algorithm="HS256")
+            return grpc_pb2.LoginResponse(message='Login Successfully {token}'.format(token=token))
+
+        return grpc_pb2.LoginResponse(message='Login Error')
 
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     # 處理綁定
-    grpc_pb2_grpc.add_GreeterServicer_to_server(Greeter(), server)
+    grpc_pb2_grpc.add_LoginServicer_to_server(Login(), server)
 
     server.add_insecure_port('[::]:50054')
     server.start()
