@@ -6,7 +6,11 @@ import grpc_pb2_grpc as grpc_pb2_grpc
 import bcrypt
 from datetime import datetime, timedelta
 from jose import jwt
+from dotenv import load_dotenv
 
+import os 
+
+load_dotenv()
 
 class Login(grpc_pb2_grpc.LoginServicer):
     def Login(self, request, _context):
@@ -17,7 +21,7 @@ class Login(grpc_pb2_grpc.LoginServicer):
         user_password = db.get_user_password(username)
         if user_password and bcrypt.checkpw(password.encode('utf8'), user_password[0][0].encode('utf8')):
             token = jwt.encode({"username": username, "exp": datetime.utcnow(
-            ) + timedelta(minutes=10)}, "123", algorithm="HS256")
+            ) + timedelta(minutes=os.getenv("TOKEN_LIMIT_MINUTES"))}, os.getenv("JWT_SECRET"), algorithm="HS256")
             return grpc_pb2.LoginResponse(message='Login Successfully {token}'.format(token=token))
 
         return grpc_pb2.LoginResponse(message='Login Error')
