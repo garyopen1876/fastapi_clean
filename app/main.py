@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from app.routers import login, user
 from app.setting import settings
-from app.logging import Loggers
+from app.log import Loggers
 
 APP_TITLE = "login_system"
 APP_VERSION = "1.0.0"
