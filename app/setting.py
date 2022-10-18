@@ -9,7 +9,8 @@ class Settings(BaseSettings):
     # JWT Token
     jwt_secret: str
     token_limit_minutes: int = 10
-
+    # gRPC url
+    grpc_url: str = "" 
     class Config:
         env_file = ".env"
 
