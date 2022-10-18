@@ -14,14 +14,14 @@ load_dotenv()
 
 class Login(grpc_pb2_grpc.LoginServicer):
     def Login(self, request, _context):
-        # 要處理的事情
+        # 實現 gRPC
         db = CRUDUser()
         username = request.username
         password = request.password
         user_password = db.get_user_password(username)
         if user_password and bcrypt.checkpw(password.encode('utf8'), user_password[0][0].encode('utf8')):
             token = jwt.encode({"username": username, "exp": datetime.utcnow(
-            ) + timedelta(minutes=os.getenv("TOKEN_LIMIT_MINUTES"))}, os.getenv("JWT_SECRET"), algorithm="HS256")
+            ) + timedelta(minutes=int(os.getenv("TOKEN_LIMIT_MINUTES")))}, os.getenv("JWT_SECRET"), algorithm="HS256")
             return grpc_pb2.LoginResponse(message='Login Successfully {token}'.format(token=token))
 
         return grpc_pb2.LoginResponse(message='Login Error')
