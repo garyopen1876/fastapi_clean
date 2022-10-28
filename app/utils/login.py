@@ -15,4 +15,4 @@ def login(username: str, password: str) -> LoginMessage:
         username=username, password=password))
     if response.message == "Login Error":
         raise UsernamePasswordError()
-    return {"message": response.message}
+    return {"message": response.message, "token": response.token}

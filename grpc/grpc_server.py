@@ -22,7 +22,7 @@ class Login(grpc_pb2_grpc.LoginServicer):
         if user_password and bcrypt.checkpw(password.encode('utf8'), user_password[0][0].encode('utf8')):
             token = jwt.encode({"username": username, "exp": datetime.utcnow(
             ) + timedelta(minutes=int(os.getenv("TOKEN_LIMIT_MINUTES")))}, os.getenv("JWT_SECRET"), algorithm="HS256")
-            return grpc_pb2.LoginResponse(message='Login Successfully {token}'.format(token=token))
+            return grpc_pb2.LoginResponse(message='Login Successfully', token=token)
 
         return grpc_pb2.LoginResponse(message='Login Error')
 
