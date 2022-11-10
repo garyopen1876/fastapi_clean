@@ -12,6 +12,17 @@ class PasswordError(HTTPException):
         )
 
 
+class TokenAuthenticateFailed(HTTPException):
+    def __init__(self, e) -> None:
+        super().__init__(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={
+                "code": 402001,
+                "result": {"error": f"Failed to authenticate token, {e}"}
+            }
+        )
+
+
 class UsernameExistedError(HTTPException):
     def __init__(self) -> None:
         super().__init__(
@@ -41,6 +52,17 @@ class EmailExistedError(HTTPException):
             detail={
                 "code": 403003,
                 "result": {"error": "Email existed."}
+            }
+        )
+
+
+class NoTokenError(HTTPException):
+    def __init__(self) -> None:
+        super().__init__(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={
+                "code": 403004,
+                "result": {"error": "No token provided."}
             }
         )
 
