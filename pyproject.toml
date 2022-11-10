@@ -1,26 +1,22 @@
 [tool.poetry]
-name = "fastapi-login"
+name = "fastapi_clean"
 version = "0.1.0"
 description = ""
 authors = ["Your Name <you@example.com>"]
-readme = "README.md"
-packages = [{include = "fastapi_login"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-fastapi = "^0.85.0"
-uvicorn = {extras = ["standard"], version = "^0.18.3"}
-SQLAlchemy = "^1.4.41"
+bcrypt = "^4.0.1"
+fastapi = "^0.86.0"
+uvicorn = {extras = ["standard"], version = "^0.19.0"}
+SQLAlchemy = "^1.4.43"
 alembic = "^1.8.1"
 python-dotenv = "^0.21.0"
-psycopg2 = "^2.9.3"
-bcrypt = "^4.0.0"
+psycopg2 = "^2.9.5"
 python-jose = {extras = ["cryptography"], version = "^3.3.0"}
 
-
-[tool.poetry.group.dev.dependencies]
-autopep8 = "^1.7.0"
+[tool.poetry.dev-dependencies]
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
