@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from app.routers import login, user
 from app.setting import settings
-
+from app.utils.log import Logger
 
 APP_TITLE = "login_system"
 APP_VERSION = "1.0.0"
@@ -11,6 +11,8 @@ if settings.develop:
 else:
     app = FastAPI(docs_url=None, redoc_url=None)
 
+
+logger = Logger(level = "uvicorn")
 
 @app.get("/", summary="Hello Page")
 def read_root():

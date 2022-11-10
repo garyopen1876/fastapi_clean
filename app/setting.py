@@ -9,6 +9,8 @@ class Settings(BaseSettings):
     # JWT Token
     jwt_secret: str
     token_limit_minutes: int = 10
+    # Log
+    log_path:str = "./tmp/logs"
 
     class Config:
         env_file = ".env"
