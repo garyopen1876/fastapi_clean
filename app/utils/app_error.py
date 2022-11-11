@@ -15,10 +15,21 @@ class PasswordError(HTTPException):
 class TokenAuthenticateFailed(HTTPException):
     def __init__(self, e) -> None:
         super().__init__(
-            status_code=status.HTTP_403_FORBIDDEN,
+            status_code=status.HTTP_402_PAYMENT_REQUIRED,
             detail={
                 "code": 402001,
                 "result": {"error": f"Failed to authenticate token, {e}"}
+            }
+        )
+
+
+class NotTodoListOwner(HTTPException):
+    def __init__(self) -> None:
+        super().__init__(
+            status_code=status.HTTP_402_PAYMENT_REQUIRED,
+            detail={
+                "code": 402002,
+                "result": {"error": "User isn't todo list's owner."}
             }
         )
 
@@ -56,12 +67,23 @@ class EmailExistedError(HTTPException):
         )
 
 
-class NoTokenError(HTTPException):
+class TodoListNotExisted(HTTPException):
     def __init__(self) -> None:
         super().__init__(
             status_code=status.HTTP_403_FORBIDDEN,
             detail={
                 "code": 403004,
+                "result": {"error": "Todo list not existed."}
+            }
+        )
+
+
+class NoTokenError(HTTPException):
+    def __init__(self) -> None:
+        super().__init__(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={
+                "code": 403005,
                 "result": {"error": "No token provided."}
             }
         )

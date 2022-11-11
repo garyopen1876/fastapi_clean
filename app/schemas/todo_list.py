@@ -7,3 +7,7 @@ class TodoListData(BaseModel):
 
 class TodoListCreate(BaseModel):
     message: str
+
+
+class TodoListDelete(BaseModel):
+    message: str

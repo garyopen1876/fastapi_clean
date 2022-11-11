@@ -16,3 +16,7 @@ def todo_list_create(token_payload: dict = Depends(token_authentication), messag
     return utils.todo_list_create(token_payload["username"], message)
 
 
+@router.delete("/{todo_list_id}", status_code=status.HTTP_200_OK, summary="Todo List delete")
+def todo_list_delete(todo_list_id: int, token_payload: dict = Depends(token_authentication)):
+    return utils.todo_list_delete(token_payload["username"], todo_list_id)
+

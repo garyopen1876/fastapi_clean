@@ -17,3 +17,11 @@ class CRUDTodoList(CRUDBase):
         except Exception as e:
             self.db.rollback()
             raise e
+
+    def delete_todo_list_by_id(self, todo_list_id: int):
+        try:
+            self.db.query(TodoList).filter_by(id=todo_list_id).delete()
+            self.db.commit()
+        except Exception as e:
+            self.db.rollback()
+            raise e
