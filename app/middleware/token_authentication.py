@@ -15,6 +15,7 @@ async def token_authentication(request: Request):
     try:
         payload = jwt.decode(token, os.getenv(
             "JWT_SECRET"), algorithms=["HS256"])
+        return payload
     except Exception as e:
         logger.error(f"""Failed to authenticate token, {e}""")
         raise TokenAuthenticateFailed(e)

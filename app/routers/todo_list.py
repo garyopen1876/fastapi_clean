@@ -6,11 +6,13 @@ from typing import Optional
 router = APIRouter()
 
 
-@router.get("/", status_code=status.HTTP_200_OK, summary="Todo List read")
+@router.get("/", status_code=status.HTTP_200_OK, summary="Todo List read", dependencies=[Depends(token_authentication)])
 def todo_list_read(page: Optional[int] = None):
     return utils.todo_list_read(page)
 
 
 @router.post("/", status_code=status.HTTP_200_OK, summary="Todo List create")
-def todo_list_create(username: str = Body(...), message: str = Body(...)):
-    return utils.todo_list_create(username, message)
+def todo_list_create(token_payload: dict = Depends(token_authentication), message: str = Body(..., embed=True)):
+    return utils.todo_list_create(token_payload["username"], message)
+
+
