@@ -20,7 +20,9 @@ class CRUDTodoList(CRUDBase):
 
     def delete_todo_list_by_id(self, todo_list_id: int):
         try:
-            self.db.query(TodoList).filter_by(id=todo_list_id).delete()
+            todo_list = self.db.query(
+                TodoList).filter_by(id=todo_list_id).one()
+            self.db.delete(todo_list)
             self.db.commit()
         except Exception as e:
             self.db.rollback()
