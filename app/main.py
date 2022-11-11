@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routers import login, user
+from app.routers import login, user, todo_list
 from app.setting import settings
 from app.utils.log import Logger
 
@@ -12,7 +12,8 @@ else:
     app = FastAPI(docs_url=None, redoc_url=None)
 
 
-logger = Logger(level = "uvicorn")
+logger = Logger(level="uvicorn")
+
 
 @app.get("/", summary="Hello Page")
 def read_root():
@@ -21,3 +22,4 @@ def read_root():
 
 app.include_router(login.router, prefix="/login", tags=["Account"])
 app.include_router(user.router, prefix="/user", tags=["User"])
+app.include_router(todo_list.router, prefix="/todo_list", tags=["TodoList"])
