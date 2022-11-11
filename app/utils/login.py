@@ -1,7 +1,7 @@
 from app.crud.crud_users import CRUDUser
 from app.setting import settings
 from app.schemas.login import LoginMessage
-from app.utils.app_error import UsernamePasswordError
+from app.utils.http_exception import UsernamePasswordError
 from datetime import datetime, timedelta
 from jose import jwt
 

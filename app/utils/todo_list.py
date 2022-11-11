@@ -1,6 +1,6 @@
 from app.crud.crud_todo_list import CRUDTodoList
 from app.db.db_models import User, TodoList
-from app.utils.app_error import UserNotExistedError, OperationFailed, TodoListNotExisted, NotTodoListOwner
+from app.utils.http_exception import UserNotExistedError, OperationFailed, TodoListNotExisted, NotTodoListOwner
 from app.schemas.todo_list import TodoListData, TodoListCreate, TodoListDelete
 from typing import Optional
 

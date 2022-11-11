@@ -1,5 +1,5 @@
 from app.utils.log import Logger
-from app.utils.app_error import NoTokenError, TokenAuthenticateFailed
+from app.utils.http_exception import NoTokenError, TokenAuthenticateFailed
 from fastapi import Request
 from jose import jwt
 import os

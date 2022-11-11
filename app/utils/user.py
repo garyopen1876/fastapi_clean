@@ -1,7 +1,7 @@
 from app.crud.crud_users import CRUDUser
 from app.db.db_models import User
 from app.schemas.users import UserCreate, UserDelete, UserResetPassword
-from app.utils.app_error import UsernameExistedError, EmailExistedError, UserNotExistedError, PasswordError
+from app.utils.http_exception import UsernameExistedError, EmailExistedError, UserNotExistedError, PasswordError
 import bcrypt
 
 
