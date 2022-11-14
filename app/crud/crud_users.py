@@ -6,7 +6,7 @@ import bcrypt
 
 class CRUDUser(CRUDBase):
 
-    def user_create(self, username: str, password: str, email: str):
+    def user_create(self, username: str, password: str, email: str) -> None:
         try:
             user = User(
                 username=username,
@@ -17,22 +17,20 @@ class CRUDUser(CRUDBase):
             )
             self.db.add(user)
             self.db.commit()
-            return True
         except Exception as e:
             self.db.rollback()
             raise e
 
-    def user_delete(self, user_id: int):
+    def user_delete(self, user_id: int) -> None:
         try:
             user = self.db.query(User).filter(User.id == user_id).one()
             self.db.delete(user)
             self.db.commit()
-            return True
         except Exception as e:
             self.db.rollback()
             raise e
 
-    def get_user_password(self, username: str):
+    def get_user_password(self, username: str) -> list[tuple:any]:
         try:
             query = self.db.query(
                 User.password
@@ -44,7 +42,7 @@ class CRUDUser(CRUDBase):
             self.db.rollback()
             raise e
 
-    def update_user_password(self, user_id: int, password: str, commit: bool = True):
+    def update_user_password(self, user_id: int, password: str, commit: bool = True) -> None:
         try:
             self.db.query(User).filter(
                 User.id == user_id).update({"password": bcrypt.hashpw(
@@ -54,7 +52,6 @@ class CRUDUser(CRUDBase):
                 self.db.commit()
             else:
                 self.db.flush()
-            return True
         except Exception as e:
             self.db.rollback()
             raise e
