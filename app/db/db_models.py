@@ -18,7 +18,7 @@ class TodoList(Base):
     __tablename__ = "todolists"
 
     id = Column(Integer, primary_key=True, index=True)
-    user = Column(Integer, ForeignKey('users.id'), nullable=False)
+    user = Column(String, ForeignKey("users.username"), nullable=False)
     message = Column(String)
     time_created = Column(DateTime, default=datetime.now, nullable=False)
     time_updated = Column(DateTime, default=datetime.now, nullable=False)
