@@ -5,13 +5,13 @@ from app.schemas.todo_list import TodoListData, TodoListCreate, TodoListDelete
 from typing import Optional
 
 
-def todo_list_read(page: Optional[int] = None):
+def todo_list_read(page: Optional[int] = None) -> TodoListData:
     db = CRUDTodoList()
     list_data = db.get_todo_list_by_page(page)
     return TodoListData(**{"list_data": list_data})
 
 
-def todo_list_create(username: str, message: str):
+def todo_list_create(username: str, message: str) -> TodoListCreate:
     db = CRUDTodoList()
     user = db.get_by_id_one_or_none(User, User.username, username)
     if not user:
@@ -20,7 +20,7 @@ def todo_list_create(username: str, message: str):
         db.insert_new(
             insert_data_list=[
                 TodoList(
-                    user=user.id,
+                    user=user.username,
                     message=message,
                 )
             ]
@@ -30,7 +30,7 @@ def todo_list_create(username: str, message: str):
         raise OperationFailed(e)
 
 
-def todo_list_delete(username: str, todo_list_id: int):
+def todo_list_delete(username: str, todo_list_id: int) -> TodoListDelete:
     db = CRUDTodoList()
     user = db.get_by_id_one_or_none(User, User.username, username)
     if not user:
@@ -40,7 +40,7 @@ def todo_list_delete(username: str, todo_list_id: int):
     if not todo_list:
         raise TodoListNotExisted()
 
-    if todo_list.user != user.id:
+    if todo_list.user != user.username:
         raise NotTodoListOwner()
 
     try:
