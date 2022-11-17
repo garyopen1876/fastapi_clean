@@ -4,7 +4,7 @@ import sys
 from app.setting import settings
 from logging.handlers import TimedRotatingFileHandler
 from pathlib import Path
-
+import datetime
 
 class Logger:
     def __init__(self, level: str):
@@ -18,7 +18,7 @@ class Logger:
         handler = logging.StreamHandler(sys.stdout)
         fhandler = TimedRotatingFileHandler(
             filename=self.log_path / ".log",
-            when="D",
+            when="midnight",
             backupCount=100,
             encoding="utf-8",
             delay=True
