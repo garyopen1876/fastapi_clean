@@ -11,9 +11,9 @@ class Settings(BaseSettings):
     token_limit_minutes: int = 10
     # Log
     log_path:str = "./tmp/logs"
-    # Telegrem
-    telegrem_api_token:str
-    telegrem_chat_id:str
+    # telegram
+    telegram_api_token:str
+    telegram_chat_id:str
 
     class Config:
         env_file = ".env"

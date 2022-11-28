@@ -30,28 +30,28 @@ class Logger:
         self.logger.addHandler(handler)
         self.logger.addHandler(fhandler)
 
-    def telegrem_call(self, str: str):
-        apiURL = f'https://api.telegram.org/bot{settings.telegrem_api_token}/sendMessage'
+    def telegram_call(self, str: str):
+        apiURL = f'https://api.telegram.org/bot{settings.telegram_api_token}/sendMessage'
         try:
             requests.post(
-                apiURL, json={'chat_id': settings.telegrem_chat_id, 'text': str})
+                apiURL, json={'chat_id': settings.telegram_chat_id, 'text': str})
         except Exception as e:
             print(e)
 
     def info(self, str: str):
-        self.telegrem_call(str)
+        self.telegram_call(str)
         self.logger.info(
             f"""{str}"""
         )
 
     def error(self, str: str):
-        self.telegrem_call(str)
+        self.telegram_call(str)
         self.logger.error(
             f"""{str}"""
         )
 
     def exception(self, str: str):
-        self.telegrem_call(str)
+        self.telegram_call(str)
         self.logger.exception(
             f"""{str}"""
         )
