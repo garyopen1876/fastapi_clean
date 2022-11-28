@@ -1,5 +1,6 @@
 import logging
 import sys
+import requests
 
 from app.setting import settings
 from logging.handlers import TimedRotatingFileHandler
@@ -29,17 +30,28 @@ class Logger:
         self.logger.addHandler(handler)
         self.logger.addHandler(fhandler)
 
+    def telegrem_call(self, str: str):
+        apiURL = f'https://api.telegram.org/bot{settings.telegrem_api_token}/sendMessage'
+        try:
+            requests.post(
+                apiURL, json={'chat_id': settings.telegrem_chat_id, 'text': str})
+        except Exception as e:
+            print(e)
+
     def info(self, str: str):
+        self.telegrem_call(str)
         self.logger.info(
             f"""{str}"""
         )
 
     def error(self, str: str):
+        self.telegrem_call(str)
         self.logger.error(
             f"""{str}"""
         )
 
     def exception(self, str: str):
+        self.telegrem_call(str)
         self.logger.exception(
             f"""{str}"""
         )

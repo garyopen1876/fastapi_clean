@@ -16,6 +16,7 @@ logger = Logger(level = "uvicorn")
 
 @app.get("/", summary="Hello Page")
 def read_root():
+    logger.info("Hello World")
     return {"Hello": "World"}
 
 
