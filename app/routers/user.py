@@ -5,12 +5,12 @@ from app.middleware.token_authentication import token_authentication
 router = APIRouter()
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED, summary="User create", dependencies=[Depends(token_authentication)])
+@router.post("", status_code=status.HTTP_201_CREATED, summary="User create", dependencies=[Depends(token_authentication)])
 def user_create(username: str = Body(...), password: str = Body(...), email: str = Body(...)):
     return utils.user_create(username, password, email)
 
 
-@router.delete("/", status_code=status.HTTP_200_OK, summary="User delete", dependencies=[Depends(token_authentication)])
+@router.delete("", status_code=status.HTTP_200_OK, summary="User delete", dependencies=[Depends(token_authentication)])
 def user_delete(user_id: int):
     return utils.user_delete(user_id)
 
