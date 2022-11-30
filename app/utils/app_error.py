@@ -15,7 +15,7 @@ class PasswordError(HTTPException):
 class TokenAuthenticateFailed(HTTPException):
     def __init__(self, e) -> None:
         super().__init__(
-            status_code=status.HTTP_403_FORBIDDEN,
+            status_code=status.HTTP_402_PAYMENT_REQUIRED,
             detail={
                 "code": 402001,
                 "result": {"error": f"Failed to authenticate token, {e}"}
