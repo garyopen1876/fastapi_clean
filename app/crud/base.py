@@ -3,7 +3,6 @@ from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.orm.attributes import InstrumentedAttribute
 
 from typing import Union, List
-
 from app.db.db_connect import SessionLocal
 
 

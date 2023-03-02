@@ -1,0 +1,6 @@
+version: "3.3"
+services:
+  api:
+    volumes:
+      - .:/app
+    entrypoint: /start-reload.sh

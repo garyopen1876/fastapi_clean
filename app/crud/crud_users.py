@@ -22,9 +22,9 @@ class CRUDUser(CRUDBase):
             self.db.rollback()
             raise e
 
-    def user_delete(self, user_id: int):
+    def user_delete(self, username: str):
         try:
-            user = self.db.query(User).filter(User.id == user_id).one()
+            user = self.db.query(User).filter(User.username == username).one()
             self.db.delete(user)
             self.db.commit()
             return True
