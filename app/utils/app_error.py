@@ -4,7 +4,7 @@ from fastapi import HTTPException, status
 class UsernamePasswordError(HTTPException):
     def __init__(self) -> None:
         super().__init__(
-            status_code=status.HTTP_404_NOT_FOUND,
+            status_code=status.HTTP_401_UNAUTHORIZED,
             detail={"code": 401001, "result": {"error": "Username or Password error."}},
         )
 
@@ -20,7 +20,7 @@ class PasswordError(HTTPException):
 class TokenAuthenticateFailed(HTTPException):
     def __init__(self, e) -> None:
         super().__init__(
-            status_code=status.HTTP_402_PAYMENT_REQUIRED,
+            status_code=status.HTTP_401_UNAUTHORIZED,
             detail={
                 "code": 401003,
                 "result": {"error": f"Failed to authenticate token, {e}"},

@@ -1,7 +1,7 @@
 from pydantic import BaseSettings
 from fastapi.security import OAuth2PasswordBearer
 
-oauth2_token = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_token = OAuth2PasswordBearer(tokenUrl="/login")
 
 
 class Settings(BaseSettings):

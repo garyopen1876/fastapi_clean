@@ -29,13 +29,13 @@ def user_delete(token=Depends(oauth2_token)):
 
 
 @router.put(
-    "/reset_password",
+    "/reset/password",
     status_code=status.HTTP_200_OK,
     summary="User reset password",
 )
 def user_reset_password(
-    token: str = Depends(oauth2_token),
     old_password: str = Body(...),
     new_password: str = Body(...),
+    token: str = Depends(oauth2_token),
 ):
     return utils.user_reset_password(token, old_password, new_password)
