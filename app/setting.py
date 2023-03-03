@@ -14,6 +14,8 @@ class Settings(BaseSettings):
     token_limit_minutes: int = 10
     # Log
     log_path: str = "./tmp/logs"
+    # Page
+    page_size: int = 10
 
     class Config:
         env_file = ".env"

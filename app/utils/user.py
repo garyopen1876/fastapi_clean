@@ -24,7 +24,7 @@ def create_user(data: CreateUserData) -> CreateUserRes:
     if db.get_by_id_one_or_none(User, User.email, data.email):
         raise EmailExistedError()
 
-    db.user_create(data.username, data.password, data.email)
+    db.create_user(data.username, data.password, data.email)
     return CreateUserRes(**{"message": "User create successfully"})
 
 
@@ -34,7 +34,7 @@ def delete_user(token: str) -> DeleteUserRes:
     if not db.get_by_id_one_or_none(User, User.username, token_analyze["username"]):
         raise UserNotExistedError()
 
-    db.user_delete(token_analyze["username"])
+    db.delete_user(token_analyze["username"])
     return DeleteUserRes(**{"message": "User delete successfully"})
 
 

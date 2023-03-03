@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.api import login, user
+from app.api import login, user, message
 from app.setting import settings
 from app.utils.log import Logger
 
@@ -21,3 +21,4 @@ def read_root():
 
 app.include_router(login.router, prefix="/login", tags=["Account"])
 app.include_router(user.router, prefix="/user", tags=["User"])
+app.include_router(message.router, prefix="/message", tags=["Message"])
