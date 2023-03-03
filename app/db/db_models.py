@@ -12,7 +12,7 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     is_active = Column(Boolean, default=False)
     # one to many
-    message_owner = relationship("Message", back_populates="user_id")
+    message_owner = relationship("Message", backref="users")
 
 
 class Message(Base):
