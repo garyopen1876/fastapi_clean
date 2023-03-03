@@ -1,4 +1,5 @@
 from fastapi import APIRouter, status, Body, Depends
+from app.schemas.users import CreateUser 
 from app.setting import oauth2_token
 from app.utils import user as utils
 
@@ -12,9 +13,9 @@ router = APIRouter()
     summary="User create",
 )
 def user_create(
-    username: str = Body(...),
-    password: str = Body(...),
-    email: str = Body(...),
+    username: str,
+    password: str,
+    email: str,
 ):
     return utils.user_create(username, password, email)
 
