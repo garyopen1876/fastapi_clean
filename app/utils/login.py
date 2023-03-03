@@ -1,6 +1,6 @@
 import bcrypt
 from app.crud.crud_users import CRUDUser
-from app.schemas.login import LoginMessage
+from app.schemas.login import LoginRes
 from app.setting import settings
 from app.utils.app_error import UsernamePasswordError
 from datetime import datetime, timedelta
@@ -9,7 +9,7 @@ from fastapi import Depends
 from jose import jwt
 
 
-def login(form_data: OAuth2PasswordRequestForm = Depends()) -> LoginMessage:
+def login(form_data: OAuth2PasswordRequestForm = Depends()) -> LoginRes:
     db = CRUDUser()
     db_password = db.get_user_password(form_data.username)
     if db_password and bcrypt.checkpw(
@@ -24,7 +24,7 @@ def login(form_data: OAuth2PasswordRequestForm = Depends()) -> LoginMessage:
             settings.jwt_secret,
             algorithm="HS256",
         )
-        return LoginMessage(
+        return LoginRes(
             **{
                 "message": "Login successfully",
                 "token": token,
