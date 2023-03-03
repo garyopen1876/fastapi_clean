@@ -1,13 +1,24 @@
 from pydantic import BaseModel
 
 
-class UserCreate(BaseModel):
+class CreateUserData(BaseModel):
+    username: str
+    password: str
+    email: str
+
+
+class ResetUserPasswordData(BaseModel):
+    old_password: str
+    new_password: str
+
+
+class CreateUserRes(BaseModel):
     message: str
 
 
-class UserDelete(BaseModel):
+class DeleteUserRes(BaseModel):
     message: str
 
 
-class UserResetPassword(BaseModel):
+class ResetUserPasswordRes(BaseModel):
     message: str

@@ -1,5 +1,5 @@
-from fastapi import APIRouter, status, Body, Depends
-from app.schemas.users import CreateUser 
+from fastapi import APIRouter, status, Depends
+from app.schemas.users import CreateUserData, ResetUserPasswordData
 from app.setting import oauth2_token
 from app.utils import user as utils
 
@@ -10,33 +10,28 @@ router = APIRouter()
 @router.post(
     "",
     status_code=status.HTTP_201_CREATED,
-    summary="User create",
+    summary="Create User",
 )
-def user_create(
-    username: str,
-    password: str,
-    email: str,
-):
-    return utils.user_create(username, password, email)
+def create_user(data: CreateUserData):
+    return utils.create_user(data)
 
 
 @router.delete(
     "",
     status_code=status.HTTP_200_OK,
-    summary="User delete",
+    summary="Delete User",
 )
-def user_delete(token=Depends(oauth2_token)):
-    return utils.user_delete(token)
+def delete_user(token=Depends(oauth2_token)):
+    return utils.delete_user(token)
 
 
 @router.put(
     "/reset/password",
     status_code=status.HTTP_200_OK,
-    summary="User reset password",
+    summary="Reset User Password",
 )
-def user_reset_password(
-    old_password: str = Body(...),
-    new_password: str = Body(...),
+def reset_user_password(
+    data: ResetUserPasswordData,
     token: str = Depends(oauth2_token),
 ):
-    return utils.user_reset_password(token, old_password, new_password)
+    return utils.reset_user_password(data, token)
