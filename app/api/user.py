@@ -1,5 +1,5 @@
 from fastapi import APIRouter, status, Depends
-from app.schemas.users import CreateUserData, ResetUserPasswordData
+from app.schemas.user import CreateUserData, ResetUserPasswordData
 from app.setting import oauth2_token
 from app.utils import user as utils
 

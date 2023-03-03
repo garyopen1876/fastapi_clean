@@ -1,7 +1,7 @@
 import bcrypt
-from app.crud.crud_users import CRUDUser
+from app.crud.crud_user import CRUDUser
 from app.db.db_models import User
-from app.schemas.users import (
+from app.schemas.user import (
     CreateUserData,
     CreateUserRes,
     DeleteUserRes,

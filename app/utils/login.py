@@ -1,5 +1,5 @@
 import bcrypt
-from app.crud.crud_users import CRUDUser
+from app.crud.crud_user import CRUDUser
 from app.schemas.login import LoginRes
 from app.setting import settings
 from app.utils.app_error import UsernamePasswordError
