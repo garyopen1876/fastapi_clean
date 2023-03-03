@@ -4,7 +4,7 @@ from .db_connect import Base
 
 
 class User(Base):
-    __tablename__ = "user"
+    __tablename__ = "users"
 
     id = Column(Integer, Sequence("user_id_seq"), primary_key=True, index=True)
     username = Column(String, unique=True, index=True)
@@ -16,7 +16,7 @@ class User(Base):
 
 
 class Message(Base):
-    __tablename__ = "message"
+    __tablename__ = "messages"
 
     id = Column(Integer, Sequence("message_id_seq"), primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey(User.id))
